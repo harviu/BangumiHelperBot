@@ -18,7 +18,7 @@ const token = tJS.token;
 const baseURL = tJS.baseURL;
 const TelegramBot = require('node-telegram-bot-api');
 const bangumiURL = 'http://bangumi.tv';
-const itemPerPage = 3; //items to show per message
+const itemPerPage = 5; //items to show per message
 const oriPerPage = 24; //items per page on bangumi.tv
 let bot;
 
