@@ -117,7 +117,7 @@ function sendRank(year,month,page,back){
                 for (i=starting;i<missing;i++){
                     resp+=i+1+'. ['+subRank[i].name+']('+subRank[i].link+')\n    _'
                     +subRank[i].info+'_\n    '
-                    +subRank[i].rate+'/10    Rank: '+ subRank[i].rank+'\n';
+                    +subRank[i].rate+'/10    Rank: '+ subRank[i].rank+'\n\n';
                 }
                 back(resp);
             }
