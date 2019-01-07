@@ -1,0 +1,30 @@
+{
+  "name": "bangumi_tv_bot",
+  "version": "1.0.0",
+  "description": "A telegram bot to provide ranking from bangumi.tv",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harviu/BangumiTVBot.git"
+  },
+  "keywords": [
+    "node",
+    "telegram",
+    "bot"
+  ],
+  "author": "Artemisianese",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harviu/BangumiTVBot/issues"
+  },
+  "homepage": "https://github.com/harviu/BangumiTVBot#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "cheerio": "^1.0.0-rc.2",
+    "node-telegram-bot-api": "^0.30.0"
+  }
+}
