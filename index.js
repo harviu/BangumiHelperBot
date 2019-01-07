@@ -15,7 +15,6 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const tJS = require('./token');
 const token = tJS.token;
-const baseURL = tJS.baseURL;
 const TelegramBot = require('node-telegram-bot-api');
 const bangumiURL = 'http://bangumi.tv';
 const itemPerPage = 5; //items to show per message
@@ -23,13 +22,13 @@ const oriPerPage = 24; //items per page on bangumi.tv
 let bot;
 
 if(process.env.NODE_ENV === 'production') {
-    bot = new TelegramBot(token, {
+    bot = new TelegramBot(process.env.TOKEN, {
         webHook:{
             host: '0.0.0.0',
             port: process.env.PORT,
         }
     });
-    bot.setWebHook(baseURL+token);
+    bot.setWebHook(process.env.BASE_URL+process.env.TOKEN);
 }
 else{
     bot = new TelegramBot(token, {
