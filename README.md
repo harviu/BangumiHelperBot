@@ -14,7 +14,7 @@ Packages needed:
 - cheerio
 - node-telegram-bot-api
 
-Create `token.js` and export the token and baseURL string. Then execute the following commands:
+Set TOKEN and BASE_URL in dotenv. Then execute the following commands:
 
 ```shell
 # npm start

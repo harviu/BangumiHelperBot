@@ -13,8 +13,6 @@ const help = "\
 "
 const cheerio = require('cheerio');
 const axios = require('axios');
-const tJS = require('./token');
-const token = tJS.token;
 const TelegramBot = require('node-telegram-bot-api');
 const bangumiURL = 'http://bangumi.tv';
 const itemPerPage = 5; //items to show per message
@@ -31,7 +29,7 @@ if(process.env.NODE_ENV === 'production') {
     bot.setWebHook(process.env.BASE_URL+process.env.TOKEN);
 }
 else{
-    bot = new TelegramBot(token, {
+    bot = new TelegramBot(process.env.TOKEN, {
         polling:true,
     });
 }
