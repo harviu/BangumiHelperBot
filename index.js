@@ -101,15 +101,25 @@ function sendRank(year,month,page,back){
         //check any not cached entry
         let missing = -1;
         let starting = parseInt(page*itemPerPage);
-        for (i=starting;i<starting+itemPerPage;i++){
-            if (!subRank[i]){
-                missing = i;
-                break;
+        let time = new Date();
+        if (!subRank.lastUp || (time-subRank.lastUp)/(1000*60*60)>1){
+            console.log("Refreshing cache");
+            missing = starting;
+        }
+        else{
+            for (i=starting;i<starting+itemPerPage;i++){
+                if (!subRank[i]){
+                    console.log("Loading nextpage");
+                    missing = i;
+                    break;
+                }
             }
         }
+        
         if (missing!=-1){
             if (missing == lastMissing){
                 //means no more data
+                console.log('No more page');
                 let resp = "";
                 for (i=starting;i<missing;i++){
                     resp+=i+1+'. ['+subRank[i].name+']('+subRank[i].link+')\n    _'
@@ -136,6 +146,7 @@ function sendRank(year,month,page,back){
                             entry.rateNo = parseInt($('.rateInfo>.tip_j', items[i]).text().substr(1));
                             entry.pic = 'http:'+$('img',items[i]).attr('src');
                             subRank[oriPage*oriPerPage+i] = entry;
+                            subRank.lastUp = new Date();
                         }
                         checkMissing(missing);
                     });
@@ -156,6 +167,7 @@ function sendRank(year,month,page,back){
                 album.push(photo);
             }
             if (resp) back(resp,album);
+            console.log(year+' '+month+' Sent');
         }
     }
 
