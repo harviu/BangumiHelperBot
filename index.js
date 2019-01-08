@@ -116,7 +116,7 @@ function sendRank(year,month,page,back){
                     +subRank[i].info+'_\n    '
                     +subRank[i].rate+'/10    Rank: '+ subRank[i].rank+'\n\n';
                 }
-                back(resp);
+                if (resp) back(resp);
             }
             else{
                 // if missing item, fetch data
@@ -155,7 +155,7 @@ function sendRank(year,month,page,back){
                 };
                 album.push(photo);
             }
-            back(resp,album);
+            if (resp) back(resp,album);
         }
     }
 
