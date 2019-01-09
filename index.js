@@ -58,19 +58,14 @@ function search(msg,match){
     keyborad.inline_keyboard[0] = buttons;
 
     let back = (resp,pics)=>{
-        if (!resp){
-            bot.answerCallbackQuery(queryId,{
-                text:'似乎没有结果(つд⊂)'
-            })
-        }else{
-            bot.sendMessage(chatId, resp,{
-                parse_mode:'Markdown',
-                reply_markup:keyborad,
-                disable_web_page_preview:true
-            });
-            // send thumbnail
-            // bot.sendMediaGroup(chatId,pics);
-        }
+        if(!resp) resp = '似乎没有结果(つд⊂)'
+        bot.sendMessage(chatId, resp,{
+            parse_mode:'Markdown',
+            reply_markup:keyborad,
+            disable_web_page_preview:true
+        });
+        // send thumbnail
+        // bot.sendMediaGroup(chatId,pics);
     }
     sendRank(year, month,0,back);
 }
@@ -267,19 +262,14 @@ bot.onText(/\/rank\s*(\w*)\s*(\w*)/, (msg, match) => {
     keyborad.inline_keyboard[0] = buttons;
 
     let back = (resp,pics)=>{
-        if (!resp){
-            bot.answerCallbackQuery(queryId,{
-                text:'似乎没有结果(つд⊂)'
-            })
-        }else{
-            bot.sendMessage(chatId, resp,{
-                parse_mode:'Markdown',
-                reply_markup:keyborad,
-                disable_web_page_preview:true
-            });
-            // send thumbnail
-            // bot.sendMediaGroup(chatId,pics);
-        }
+        if(!resp) resp = '似乎没有结果(つд⊂)'
+        bot.sendMessage(chatId, resp,{
+            parse_mode:'Markdown',
+            reply_markup:keyborad,
+            disable_web_page_preview:true
+        });
+        // send thumbnail
+        // bot.sendMediaGroup(chatId,pics);
     }
     sendRank(year, month,0,back);
 });
