@@ -58,13 +58,19 @@ function search(msg,match){
     keyborad.inline_keyboard[0] = buttons;
 
     let back = (resp,pics)=>{
-        bot.sendMessage(chatId, resp,{
-            parse_mode:'Markdown',
-            reply_markup:keyborad,
-            disable_web_page_preview:true
-        });
-        // send thumbnail
-        // bot.sendMediaGroup(chatId,pics);
+        if (!resp){
+            bot.answerCallbackQuery(queryId,{
+                text:'似乎没有结果(つд⊂)'
+            })
+        }else{
+            bot.sendMessage(chatId, resp,{
+                parse_mode:'Markdown',
+                reply_markup:keyborad,
+                disable_web_page_preview:true
+            });
+            // send thumbnail
+            // bot.sendMediaGroup(chatId,pics);
+        }
     }
     sendRank(year, month,0,back);
 }
@@ -126,7 +132,7 @@ function sendRank(year,month,page,back){
                     +subRank[i].info+'_\n    '
                     +subRank[i].rate+'/10    Rank: '+ subRank[i].rank+'\n\n';
                 }
-                if (resp) back(resp);
+                back(resp);
             }
             else{
                 // if missing item, fetch data
@@ -166,7 +172,7 @@ function sendRank(year,month,page,back){
                 };
                 album.push(photo);
             }
-            if (resp) back(resp,album);
+            back(resp,album);
             console.log(year+' '+month+' Sent');
         }
     }
@@ -261,13 +267,19 @@ bot.onText(/\/rank\s*(\w*)\s*(\w*)/, (msg, match) => {
     keyborad.inline_keyboard[0] = buttons;
 
     let back = (resp,pics)=>{
-        bot.sendMessage(chatId, resp,{
-            parse_mode:'Markdown',
-            reply_markup:keyborad,
-            disable_web_page_preview:true
-        });
-        // send thumbnail
-        // bot.sendMediaGroup(chatId,pics);
+        if (!resp){
+            bot.answerCallbackQuery(queryId,{
+                text:'似乎没有结果(つд⊂)'
+            })
+        }else{
+            bot.sendMessage(chatId, resp,{
+                parse_mode:'Markdown',
+                reply_markup:keyborad,
+                disable_web_page_preview:true
+            });
+            // send thumbnail
+            // bot.sendMediaGroup(chatId,pics);
+        }
     }
     sendRank(year, month,0,back);
 });
