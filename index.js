@@ -176,6 +176,52 @@ function sendRank(year,month,page,back){
     checkMissing(-1);
 }
 
+function rank(msg, match) {
+    console.log("Rank command received");
+    year = match[1];
+    if(!year) year = 'now';
+    month = match[2];
+    if(!month) month = 'all';
+
+    let time = new Date();
+    if(year == 'now'){
+        // get this season rank
+        month = Math.floor(time.getMonth()/3)*3+1;
+        year = time.getFullYear();
+    }
+    if(year == 'last'){
+        //get last season rank
+        month = Math.floor(time.getMonth()/3)*3+1;
+        year = time.getFullYear();
+        month = month -3;
+        if(month<0){
+            month = month +12;
+            year = year-1;
+        }
+    }
+
+    const chatId = msg.chat.id;
+    const buttons = [
+        {
+            text:'>>',
+            callback_data:year +' '+month+' 1'
+        }
+    ];
+    keyborad.inline_keyboard[0] = buttons;
+
+    let back = (resp,pics)=>{
+        if(!resp) resp = '似乎没有结果(つд⊂)'
+        bot.sendMessage(chatId, resp,{
+            parse_mode:'Markdown',
+            reply_markup:keyborad,
+            disable_web_page_preview:true
+        });
+        // send thumbnail
+        // bot.sendMediaGroup(chatId,pics);
+    }
+    sendRank(year, month,0,back);
+}
+
 bot.on('callback_query',(query)=>{
     // handle page change
     console.log("Change page command received");
@@ -232,50 +278,18 @@ bot.onText(/\/help/, (msg, match) => {
     bot.sendMessage(chatId, help);
 });
 
-bot.onText(/\/rank\s*(\w*)\s*(\w*)/, (msg, match) => {
-    console.log("Rank command received");
-    year = match[1];
-    if(!year) year = 'now';
-    month = match[2];
-    if(!month) month = 'all';
-
-    let time = new Date();
-    if(year == 'now'){
-        // get this season rank
-        month = Math.floor(time.getMonth()/3)*3+1;
-        year = time.getFullYear();
-    }
-    if(year == 'last'){
-        //get last season rank
-        month = Math.floor(time.getMonth()/3)*3+1;
-        year = time.getFullYear();
-        month = month -3;
-        if(month<0){
-            month = month +12;
-            year = year-1;
-        }
-    }
-
-    const chatId = msg.chat.id;
-    const buttons = [
-        {
-            text:'>>',
-            callback_data:year +' '+month+' 1'
-        }
-    ];
-    keyborad.inline_keyboard[0] = buttons;
-
-    let back = (resp,pics)=>{
-        if(!resp) resp = '似乎没有结果(つд⊂)'
-        bot.sendMessage(chatId, resp,{
-            parse_mode:'Markdown',
-            reply_markup:keyborad,
-            disable_web_page_preview:true
-        });
-        // send thumbnail
-        // bot.sendMediaGroup(chatId,pics);
-    }
-    sendRank(year, month,0,back);
-});
+bot.onText(/\/rank\s*(\w*)\s*(\w*)/,rank);
 
 bot.onText(/^[^\/]+/, search);
+
+bot.on('channel_post',(msg)=>{
+    const p1 = /\/rank\s*(\w*)\s*(\w*)/;
+    const p2 = /\/search\s+(.*)/;
+    const m1 = msg.text.match(p1);
+    const m2 = msg.text.match(p2);
+    if (m1){
+        rank(msg,m1);
+    }else if(m2){
+        search(msg,m2);
+    }
+});
