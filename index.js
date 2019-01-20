@@ -140,8 +140,8 @@ function sendRank(year,month,page,back){
                         let items = $('#browserItemList').find('li.item');
                         for (i=0;i< items.length;i++){
                             let entry={};
-                            entry.name = $('h3>a', items[i]).text();
-                            entry.link = bangumiURL+$('a', items[i]).attr('href');
+                            entry.name = $('h3>a', items[i]).text().replace('[','').replace(']','');
+                            entry.link = bangumiURL+$('a', items[i]).attr('href').replace('(','').replace(')','');
                             entry.info = $('p.info', items[i]).text().trim();
                             entry.rank = $('.rank', items[i]).text().substr(5);
                             entry.rate = $('.rateInfo>small', items[i]).text();
@@ -176,7 +176,7 @@ function sendRank(year,month,page,back){
     checkMissing(-1);
 }
 
-function rank(msg, match) {
+function handelRank(msg, match) {
     console.log("Rank command received");
     year = match[1];
     if(!year) year = 'now';
@@ -278,7 +278,7 @@ bot.onText(/\/help/, (msg, match) => {
     bot.sendMessage(chatId, help);
 });
 
-bot.onText(/\/rank\s*(\w*)\s*(\w*)/,rank);
+bot.onText(/\/rank\s*(\w*)\s*(\w*)/,handelRank);
 
 bot.onText(/^[^\/]+/, search);
 
@@ -288,7 +288,7 @@ bot.on('channel_post',(msg)=>{
     const m1 = msg.text.match(p1);
     const m2 = msg.text.match(p2);
     if (m1){
-        rank(msg,m1);
+        handelRank(msg,m1);
     }else if(m2){
         search(msg,m2);
     }
