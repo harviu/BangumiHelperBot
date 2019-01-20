@@ -45,6 +45,7 @@ let keyborad = {
 };
 
 function search(msg,match){
+    console.log("Search command received");
     let param = match[1]?match[1]:match[0];
     const chatId = msg.chat.id;
     let year = 'search';
@@ -177,6 +178,7 @@ function sendRank(year,month,page,back){
 
 bot.on('callback_query',(query)=>{
     // handle page change
+    console.log("Change page command received");
     const chatId = query.message.chat.id;
     const messageId = query.message.message_id;
     const data = query.data;
@@ -219,17 +221,19 @@ bot.on('callback_query',(query)=>{
 bot.onText(/\/search\s+(.*)/,search);
 
 bot.onText(/\/start/, (msg, match) => {
+    console.log("Start command received");
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, help);
 });
 
 bot.onText(/\/help/, (msg, match) => {
+    console.log("Help command received");
     const chatId = msg.chat.id;
     bot.sendMessage(chatId, help);
 });
 
 bot.onText(/\/rank\s*(\w*)\s*(\w*)/, (msg, match) => {
-
+    console.log("Rank command received");
     year = match[1];
     if(!year) year = 'now';
     month = match[2];
